@@ -5,55 +5,41 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Cache for page data to avoid repeated file reads
+const pageDataCache = {};
+
 // Serve static files from /static directory
 app.use('/static', express.static(path.join(__dirname, 'static')));
 
-// Helper function to load JSON data
+// Helper function to load JSON data (with caching)
 function loadPageData(pageName) {
+    if (pageDataCache[pageName]) {
+        return pageDataCache[pageName];
+    }
+    
     const filePath = path.join(__dirname, `${pageName}-data.json`);
     if (fs.existsSync(filePath)) {
-        return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        pageDataCache[pageName] = data;
+        return data;
     }
     return null;
 }
 
-// Main route handler for dynamic content
-app.get('*', (req, res) => {
-    const { webp, device } = req.query;
-    
-    // Check if this is a dynamic JSON request
-    if (webp && device) {
-        // Determine which page data to load based on URL
-        let pageDataFile = 'index';
-        if (req.path === '/about' || req.path === '/about.html') {
-            pageDataFile = 'about';
-        }
-        
-        const pageData = loadPageData(pageDataFile);
-        
-        if (pageData) {
-            // Return JSON response with body, cache, routes, and data
-            res.json(pageData);
-        } else {
-            res.status(404).json({ error: 'Page not found' });
-        }
-    } else {
-        // Normal HTML request - serve index.html
-        const htmlFile = path.join(__dirname, 'index.html');
-        res.sendFile(htmlFile);
+// Helper function to determine page data file from URL
+function getPageDataFile(urlPath) {
+    if (urlPath === '/about' || urlPath === '/about.html') {
+        return 'about';
     }
-});
+    return 'index';
+}
 
-// Handle POST requests (d.js uses POST for JSON fetches)
-app.post('*', (req, res) => {
+// Helper function to handle JSON data requests
+function handleDataRequest(req, res) {
     const { webp, device } = req.query;
     
     if (webp && device) {
-        let pageDataFile = 'index';
-        if (req.path === '/about' || req.path === '/about.html') {
-            pageDataFile = 'about';
-        }
-        
+        const pageDataFile = getPageDataFile(req.path);
         const pageData = loadPageData(pageDataFile);
         
         if (pageData) {
@@ -64,7 +50,24 @@ app.post('*', (req, res) => {
     } else {
         res.status(400).json({ error: 'Invalid request' });
     }
+}
+
+// Main route handler for dynamic content
+app.get('*', (req, res) => {
+    const { webp, device } = req.query;
+    
+    // Check if this is a dynamic JSON request
+    if (webp && device) {
+        handleDataRequest(req, res);
+    } else {
+        // Normal HTML request - serve index.html
+        const htmlFile = path.join(__dirname, 'index.html');
+        res.sendFile(htmlFile);
+    }
 });
+
+// Handle POST requests (d.js uses POST for JSON fetches)
+app.post('*', handleDataRequest);
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
