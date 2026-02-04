@@ -822,3 +822,28 @@ transform: translate3d(110%,0,0)
     display: block;
 }
 
+/* Fix Issue 1: Fast fade out for page transitions */
+.page-leaving {
+    opacity: 0 !important;
+    transition: opacity 100ms ease !important;
+}
+
+/* Fix Issue 2: Show About page section headers and content by default */
+#a-r .sfx-y div,
+#a-r .sfx-y span,
+#a-r h2 span,
+#a-r-hero p {
+    transform: translate3d(0, 0, 0) !important;
+}
+
+/* Show main About content */
+#a-r .a-r-tm div,
+#a-r .a-r-ts div,
+#a-r-experience h2 span,
+#a-r-recognition h2 span,
+#a-r-clients h2 span,
+#a-r-contact h2 span,
+#a-r-credits h2 span {
+    transform: none !important;
+}
+
