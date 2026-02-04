@@ -822,10 +822,16 @@ transform: translate3d(110%,0,0)
     display: block;
 }
 
-/* Fix Issue 1: Fast fade out for page transitions */
-.page-leaving {
-    opacity: 0 !important;
-    transition: opacity 100ms ease !important;
+/* Fix Issue 1: Fast fade out for About page during transitions */
+/* Make About page content fade out quickly when being removed */
+#a-r {
+    transition: opacity 150ms ease, visibility 150ms;
+}
+
+/* Immediately hide About page when it starts being removed/replaced */
+#main .page:first-child:not(:only-child) #a-r {
+    opacity: 0;
+    visibility: hidden;
 }
 
 /* Fix Issue 2: Show About page section headers and content by default */
