@@ -15,5 +15,51 @@
         "/about": {"page": "ab", "index": 0},
         "/about.html": {"page": "ab", "index": 0}
     },
-    "data": {}
+    "data": {
+        "load": {
+            "preload": true,
+            "texL": 25,
+            "tex": [
+                "/static/media/d/load/0.jpg?1",
+                "/static/media/d/load/1.jpg?1",
+                "/static/media/d/load/2.jpg?1",
+                "/static/media/d/load/3.jpg?1",
+                "/static/media/d/load/4.jpg?1",
+                "/static/media/d/load/5.jpg?1",
+                "/static/media/d/load/6.jpg?1",
+                "/static/media/d/load/7.jpg?1",
+                "/static/media/d/load/8.jpg?1",
+                "/static/media/d/load/9.jpg?1",
+                "/static/media/d/load/10.jpg?1",
+                "/static/media/d/load/11.jpg?1",
+                "/static/media/d/load/12.jpg?1",
+                "/static/media/d/load/13.jpg?1",
+                "/static/media/d/load/14.jpg?1",
+                "/static/media/d/load/15.jpg?1",
+                "/static/media/d/load/16.jpg?1",
+                "/static/media/d/load/17.jpg?1",
+                "/static/media/d/load/18.jpg?1",
+                "/static/media/d/load/19.jpg?1",
+                "/static/media/d/load/20.jpg?1",
+                "/static/media/d/load/21.jpg?1",
+                "/static/media/d/load/22.jpg?1",
+                "/static/media/d/load/23.jpg?1",
+                "/static/media/d/load/24.jpg?1"
+            ]
+        },
+        "/": {
+            "preload": true,
+            "texL": 8,
+            "tex": [
+                "/static/media/d/work/gucci/home.jpg?1",
+                "/static/media/d/work/samsung/home.jpg?1",
+                "/static/media/d/work/rituals/home.jpg?1",
+                "/static/media/d/work/moco/home.jpg?1",
+                "/static/media/d/work/sennheiser/home.jpg?1",
+                "/static/media/d/work/swarovski/home.jpg?1",
+                "/static/media/d/work/activia/home.jpg?1",
+                "/static/media/d/work/saeco/home.jpg?1"
+            ]
+        }
+    }
 }
