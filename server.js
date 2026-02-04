@@ -45,10 +45,10 @@ function handleDataRequest(req, res) {
         if (pageData) {
             res.json(pageData);
         } else {
-            res.status(404).json({ error: 'Page not found' });
+            res.status(404).json({ error: 'Page data not found' });
         }
     } else {
-        res.status(400).json({ error: 'Invalid request' });
+        res.status(400).json({ error: 'Missing required query parameters: webp and device' });
     }
 }
 
